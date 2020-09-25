@@ -1,6 +1,7 @@
 /** Class representing a Tree. */
 class Tree {
 
+
     /**
      * Creates a Tree Object
      * Populates a single attribute that contains a list (array) of Node objects to be used by the other functions in this class
@@ -8,168 +9,117 @@ class Tree {
      * @param {json[]} json - array of json objects with name and parent fields
      */
     constructor(json) {
-    Node {name: "Animal", parentNode: undefined, children: Array(2), level: 0, _}
-        children: (2)
-        level: 0
-        name: "Animal"
-        parentNode: Node {name:"Animal", parentName: "root", parentNode: undefined, children: Array(2), level: 0, _}
-        position: 0
-        _proto_: Object
-    
-    Node {name: "Nephrozoa", parentName: "Animal", parentNode: Node, children: Array(2), level: 1, _}
-        children: (2) [Node, Node]
-        level:1
-        name: "Nephrozoa"
-        parentName: "Animal"
-        parentNode: Node {name: "Animal", parentName: "root", parentNode: undefined, children: Array (2), level: 0, _}
-        position: 0
-        _proto_: Object
+        /**map json to a new array called node */
+        this.hwlist = json.map(input => {
+            return new Node(input.name, input.parent)
+        })
 
-    Node {name: "Sponges", parentName: "Animal", parentNode: Node, children: Array(2), level: 1, _}
-        children: (2) [Node, Node]
-        level:1
-        name: "Sponges"
-        parentName: "Animal"
-        parentNode: Node {name: "Animal", parentName: "root", parentNode: undefined, children: Array (2), level: 0, _}
-        position: 2
-        _proto_: Object
-        
-    Node {name: "Calcinea", parentName: "Sponges", parentNode: Node, children: Array(2), level: 2, _}
-        children: (2) [Node, Node]
-        level:2
-        name: "Calcinea"
-        parentName: "Sponges"
-        parentNode: Node {name: "Calcinea", parentName: "Animal", parentNode: Node, children: Array (2), level: 1, _}
-        position: 0
-        _proto_: Object
-        
-    Node {name: "Petronina", parentName: "Sponges", parentNode: Node, children: Array(2), level: 2, _}
-        children: (2) [Node, Node]
-        level:2
-        name: "Petronina"
-        parentName: "Sponges"
-        parentNode: Node {name: "Petronina", parentName: "Sponges", parentNode: Node, children: Array (2), level: 2, _}
-        position: 0
-        _proto_: Object
-    
-    Node {name: "Vertebrates", parentName: "Nephrozoa", parentNode: Node, children: Array(3), level: 2, _}
-        children: (3) [Node, Node, Node]
-        level:3
-        name: "Vertebrates"
-        parentName: "Nephrozoa"
-        parentNode: Node {name: "Vertebrates", parentName: "Nephrozoa", parentNode: Node, children: Array (2), level: 0, _}
-        position: 0
-        _proto_: Object   
-            
-    Node {name: "Protosomes", parentName: "Nephrozoa", parentNode: Node, children: Array(3), level: 2, _}
-        children: (2) [Node, Node]
-        level:3
-        name: "Protosomes"
-        parentName: "Nephrozoa"
-        parentNode: Node {name: "Protosomes", parentName: "Nephrozoa", parentNode: Node, children: Array (2), level: 0, _}
-        position: 0
-        _proto_: Object 
-        
-    Node {name: "Lampreys", parentName: "Vertebrates", parentNode: Node, children: Array(3), level: 4, _}
-        children: (2) [Node, Node]
-        level:3
-        name: "Lampreys"
-        parentName: "Vertebrates"
-        parentNode: Node {name: "Lampreys", parentName: "Vertebrates", parentNode: Node, children: Array (0), level: 4, _}
-        position: 0
-        _proto_: Object
-            
-    Node {name: "Sharks", parentName: "Vertebrates", parentNode: Node, children: Array(0), level: 4, _}
-        children: (0) []
-        level:3
-        name: "Sharks"
-        parentName: "Vertebrates"
-        parentNode: Node {name: "Sharks", parentName: "Vertebrates", parentNode: Node, children: Array (0), level: 4, _}
-        position: 0
-        _proto_: Object
-        
-    Node {name: "Tetrapods", parentName: "Vertebrates", parentNode: Node, children: Array(3), level: 4, _}
-        children: (2) [Node, Node]
-        level:3
-        name: "Tetropods"
-        parentName: "Vertebrates"
-        parentNode: Node {name: "Sharks", parentName: "Vertebrates", parentNode: undefined, children: Array (0), level: 4, _}
-        position: 0
-        _proto_: Object
-    
-    Node {name: "Water Bears", parentName: "Protosomes", parentNode: Node, children: Array(4), level: 4, _}
-        children: (0) []
-        level:3
-        name: "Water Bears"
-        parentName: "Protosomes"
-        parentNode: Node {name: "Water Bears", parentName: "Protosomes", parentNode: undefined, children: Array (0), level: 4, _}
-        position: 0
-        _proto_: Object
-        
-    Node {name: "Hexapods", parentName: "Protosomes", parentNode: Node, children: Array(4), level: 4, _}
-        children: (2) [Node, Node]
-        level:4
-        name: "Hexapods"
-        parentName: "Protosomes"
-        parentNode: Node {name: "Hexapods", parentName: "Protosomes", parentNode: undefined, children: Array (2), level: 4, _}
-        position: 0
-        _proto_: Object 
-
-    Node {name: "Turtles", parentName: "Tetrapods", parentNode: Node, children: Array(3), level: 5, _}
-        children: () []
-        level:3
-        name: "Turtles"
-        parentName: "Tetrapods"
-        parentNode: Node {name: "Turtles", parentName: "Tetrapods", parentNode: undefined, children: Array (0), level: 5, _}
-        position: 0
-        _proto_: Object
-
-    Node {name: "Insects", parentName: "Hexapods", parentNode: Node, children: Array(4), level: 5, _}
-        children: (0) []
-        level:4
-        name: "Insects"
-        parentName: "Hexapods"
-        parentNode: Node {name: "Insects", parentName: "Hexapods", parentNode: undefined, children: Array (), level: 5, _}
-        position: 0
-        _proto_: Object
-
-    Node {name: "Proturans", parentName: "Hexapods", parentNode: Node, children: Array(4), level: 5, _}
-        children: (0) []
-        level:4
-        name: "Proturans"
-        parentName: "Hexapods"
-        parentNode: Node {name: "Proturans", parentName: "Hexapods", parentNode: undefined, children: Array (), level: 5, _}
-        position: 0
-        _proto_: Object
+        console.log(this.hwlist);
     }
 
     /**
      * Function that builds a tree from a list of nodes with parent refs
      */
     buildTree() {
-        // note: in this function you will assign positions and levels by making calls to assignPosition() and assignLevel()
+        for(let treeNode of this.hwlist){
+            let parentName = treeNode.parentName
+            let parentNode = this.hwlist.find(node => node.name === treeNode.parentName)
+            if(parentNode) {
+                parentNode.addChild(treeNode);
+            }
+        } 
+        console.log(this.treeNode)
 
+    // note: in this function you will assign positions and levels by making calls to assignPosition() and assignLevel()
+    /**Recursive fucntion that assign level to each node */
+        let treeNode = this.hwlist.find(node => node.name === 'Animal')
+        this.assignLevel(treeNode, 0)
+        this.assignPosition(treeNode, 0) 
+    }
+
+
+
+    assignLevel(node, level){
+       node.level = level
+       for (let treeNode of node.children){
+            this.assignLevel(treeNode, level +1)
+            console.log(treeNode)
+        }
     }
 
     /**
-     * Recursive function that assign levels to each node
+     * Recursive function that assign positions to each position
      */
-    assignLevel(node, level) {
+    assignPosition(node, position){
+        node.position = position
 
-    }
+        /**Recursive function to navigate and find last node with largest position */
+        function findPosition(node, Run) {
+            if(Run){
+                return
+            }
+            let lastChild = node.children[node.children.length -1]
+            console.log('findPosition:lastChild', lastChild)
+            return findPosition(lastChild, true)
+        }
 
-    /**
-     * Recursive function that assign positions to each node
-     */
-    assignPosition(node, position) {
 
+        for(let treeIndex in node.children){
+            let treeNode = node.children[treeIndex]
+            if(treeIndex==0){
+                this.assignPosition(treeNode, position)
+            } else {
+                this.assignPosition(treeNode, position +1)
+            }
+        }
+        
     }
 
     /**
      * Function that renders the tree
      */
-    renderTree() {
+    renderTree(){
+        let body = d3.select('body')
 
-    }
+        /**Created svg */
+        let svg= body.append("svg")
+            .attr('height', 1200)
+            .attr("width", 1200)
+
+        /**Lines - Drew these first to layer them on the below the circles */
+        /**My line connecting function isn't working because children array is empty
+         * to remedy this I would connect my parentNode with my treeNode but I was
+         * not able to get this to work.
+         */
+        let  children = this.hwlist.filter(node => node.parentNode)
+        svg.selectAll("line")
+        .data(children)
+        .enter()
+        .append("line")
+        .attr("x1", treeNode => (treeNode.parentNode.level*150)+150)
+        .attr("y1", treeNode => (treeNode.parentNode.position*150)+150)
+        .attr("x2", treeNode => (treeNode.level*150)+150)
+        .attr("y2", treeNode => (treeNode.position*150)+150)
+
+        /**Created the circle groupings */
+        let drumcircle = svg.selectAll("g")
+            .data(this.hwlist)
+            .enter().append("g")
+            .attr("class", "nodeGroup")
+            .attr("transform", d => `translate (${(d.level*150)+150}, ${(d.position*100)+100})`)
+
+        drumcircle.append('circle')
+            .attr('r', 45)
+        
+        drumcircle.append("text")
+            .attr('class', 'label')
+            .html(d=> d.name)
+
+            console.log(children)
+    } 
+
+    
+
+    
 
 }
