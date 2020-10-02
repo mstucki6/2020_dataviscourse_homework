@@ -33,7 +33,8 @@ class Map {
      */
     constructor(data, updateCountry) {
         this.projection = d3.geoWinkel3().scale(140).translate([365, 225]);
-        this.nameArray = data.population.map(d => d.geo.toUpperCase());
+        this.geoPath = d3.geoPath(this.projection);
+        this.nameArray = data.population.map(d => d.geo.toUpperCase()); 
         this.populationData = data.population;
         this.updateCountry = updateCountry;
     }
@@ -43,6 +44,81 @@ class Map {
      * @param world the json data with the shape of all countries and a string for the activeYear
      */
     drawMap(world) {
+         console.log(this.populationData)
+         
+         //Call the library 
+        const featureCollection = topojson.feature(world, world.objects.countries);
+        console.log(topojson.feature(world, world.objects.countries))
+
+        //Create country [class from above] array 
+        const countryCodetoContinents = {};
+
+            this.populationData.forEach( data => {
+                countryCodetoContinents[data.geo]=data.region
+            });
+            console.log(countryCodetoContinents)
+
+        //create a loop that goes through all the items and appends them to the empty array
+       const svg = d3.select("#map-chart")
+            .append("svg"); //Create new svg
+            svg.append('g').selectAll("path")
+            .data(featureCollection.features)
+            .enter() // join data to html structure
+            .append("path")
+            .attr('d', this.geoPath)
+            .attr('class', d =>{
+                if (countryCodetoContinents[d.id.toLowerCase()]){
+                    return countryCodetoContinents[d.id.toLowerCase()];
+                }
+                return "no-region";
+            } );
+
+           
+
+
+            // function pickRegion(i, x){
+            //     for (let j of x){
+            //         if (j.geo.toUpperCase()=== i.id){
+            //             return j.region
+            //         }
+            //     }
+            // }
+            
+
+            // for (let i of featureCollection.features){
+            //     let country = new CountryData(i.type, i.id, i.properties, i.geometry, 
+            //         pickRegion(i, this.populationData))
+            //     countries.push(country)
+            // }
+            // console.log(countries)
+
+        //    svg.select("#map-chart")
+        //         .append("svg")
+        //         .attr('id', "map-chart svg")
+
+        //     svg.selectAll("path")
+        //         .data(featureCollection.features)
+        //         .join("path")
+        //         .attr('d', path)
+        //         // .style('fill', 'gray')
+                
+
+
+            //Map gridlines
+            let graticule = d3.geoGraticule();
+            svg.append('path')
+            .datum(graticule).attr('class', "graticule").attr('d', this.geoPath).attr('fill', 'none');
+            svg.append('path')
+            .datum(graticule.outline).attr('class', "graticule").attr('d', this.geoPath).attr('fill', 'none').attr("class", "stroke");
+
+            
+            
+
+            
+ 
+
+       
+       
         //note that projection is global!
 
         // ******* TODO: PART I *******
@@ -50,9 +126,13 @@ class Map {
         // Draw the background (country outlines; hint: use #map-chart)
         // Make sure to add a graticule (gridlines) and an outline to the map
 
+
+        //Bind data and create paths for GeoJSON features
+
         // Hint: assign an id to each country path to make it easier to select afterwards
         // we suggest you use the variable in the data element's id field to set the id
 
+        
         // Make sure and give your paths the appropriate class (see the .css selectors at
         // the top of the provided html file)
 
@@ -61,7 +141,6 @@ class Map {
 
         //TODO - your code goes here
     }
-
     /**
      * Highlights the selected conutry and region on mouse click
      * @param activeCountry the country ID of the country to be rendered as selected/highlighted

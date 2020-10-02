@@ -53,6 +53,7 @@ class GapPlot {
         //TODO - your code goes here -
 
 
+
         // ******* TODO: PART 3 *******
         /**
          For part 4 of the homework, you will be using the other 3 parameters.
@@ -78,12 +79,45 @@ class GapPlot {
 
          Main things you should set up here:
          1). Create the x and y axes
+        
+
          2). Create the activeYear background text
 
 
          The dropdown menus have been created for you!
 
          */
+        // const worldData = this.data['fertility-rate'].map( (countryData, index) => {
+        //     return {
+        //         country:countryData.country, //Go get to build a new array
+        //         id: countryData.geo,
+        //         xVal : countryData[this.activeYear],
+        //         yVal : this.data['gdp'][index][activeYear],
+        //         circleSize : this.data['child-mortality'][index][activeYear] //
+        //     }
+
+        // });
+
+        // console.log(worldData)
+
+        // const x = d3.scaleLinear()
+        //     .domain([0,d3.max(worldData, d => {
+        //         return d.xVal
+        //     })])
+        //     .range([0, this.width]);
+        
+        // const y = d3.scaleLinear()
+        //     .domain([0,d3.max(worldData, d => {
+        //         return d.yVal
+        //     })])
+        //     .range([ this.height, 0]);
+        
+        // const xAxis = d3.axisBottom().scale(x);
+        // const yAxis= d3.axisLeft().scale(y);
+        
+        // console.log(y(200))
+        
+        
 
         d3.select('#scatter-plot')
             .append('div').attr('id', 'chart-view');
@@ -102,6 +136,20 @@ class GapPlot {
             .attr("height", this.height + this.margin.top + this.margin.bottom);
 
         let svgGroup = d3.select('#chart-view').select('.plot-svg').append('g').classed('wrapper-group', true);
+            svgGroup.append('g')
+            // .attr("transform", `translate (${this.margin.left},${this.margin.top})`)
+                // .call(yAxis);
+            svgGroup.append('g')
+                .attr("transform", `translate (${this.margin.left},${this.height + this.margin.top})`)
+                // .call(xAxis);
+            
+            // svgGroup.selectAll("circle")
+            //     .data(worldData)
+            //     .enter()
+            //     .append("circle")
+            //     .attr("x", d =>  x(d.xVal))
+            //     .attr("y", d =>  y(d.yVal))
+            //     .attr("r", 10);
 
 
         //TODO - your code goes here
@@ -144,6 +192,8 @@ class GapPlot {
             .append('svg')
             .append('g')
             .attr('transform', 'translate(10, 0)');
+        this.drawDropDown()
+
     }
 
     /**
@@ -155,6 +205,7 @@ class GapPlot {
      * @param circleSizeIndicator identifies the values to use for the circle size
      */
     updatePlot(activeYear, xIndicator, yIndicator, circleSizeIndicator) {
+        
 
         // ******* TODO: PART 2 *******
         /*
@@ -164,27 +215,28 @@ class GapPlot {
         You need to start by mapping the data specified by the parameters to the PlotData Object
         Your PlotData object is specified at the top of the file
         You will need get the data specified by the x, y and circle size parameters from the data passed
-        to the GapPlot constructor
+        to the GapPlot constructor*/
 
-        *** Setting the scales for your x, y, and circle data ***
+        
+       /**** Setting the scales for your x, y, and circle data ***
         For x and y data, you should get the overall max of the whole data set for that data category,
-        not just for the activeYear.
+        not just for the activeYear.*/
 
-        ***draw circles***
+        /****draw circles***
         draw the circles with a scaled area from the circle data, with cx from your x data and cy from y data
         You need to size the circles from your circleSize data, we have provided a function for you to do this
-        called circleSizer. Use this when you assign the 'r' attribute.
+        called circleSizer. Use this when you assign the 'r' attribute.*/
 
-        ***Tooltip for the bubbles***
+        /****Tooltip for the bubbles***
         You need to assign a tooltip to appear on mouse-over of a country bubble to show the name of the country.
         We have provided the mouse-over for you, but you have to set it up
-        Hint: you will need to call the tooltipRender function for this.
+        Hint: you will need to call the tooltipRender function for this.*/
 
-        *** call the drawLegend() and drawDropDown()
+        /**** call the drawLegend() and drawDropDown()
         These will draw the legend and the drop down menus in your data
-        Pay attention to the parameters needed in each of the functions
+        Pay attention to the parameters needed in each of the functions*/
         
-        */
+        
 
         /**
          *  Function to determine the circle radius by circle size
@@ -199,7 +251,117 @@ class GapPlot {
             return d.circleSize ? cScale(d.circleSize) : 3;
         };
 
-        //TODO - your code goes here -
+        // TODO - your code goes here -
+        let worldDataX = this.data[xIndicator]
+        let worldDataY = this.data[yIndicator]
+        let worldDataCircle = this.data[circleSizeIndicator]
+
+        let worldXvalues =  []
+        for (let item of worldDataX){
+            let newArray = Object.values(item)
+            for (let value of Object.values(newArray)) {
+                if(typeof value === 'number'){
+                    worldData.push(value)
+                }
+            }
+        }
+
+        let worldYvalues  =  []
+        for (let item of worldDataY){
+            let newArray = Object.values(item)
+            for (let value of Object.values(newArray)) {
+                if(typeof value === 'number'){
+                    worldYvalues.push(value)
+                }
+            }
+        }
+
+        let worldCircles = []
+        for (let item of worldDataCircle){
+            let newArray = Object.values(item)
+            for (let value of Object.values(newArray)) {
+                if(typeof value === 'number'){
+                    wworldCircles.push(value)
+                }
+            }
+        }
+
+        let minSize = d3.min(worldCircles);
+        let maxSize = d3.max(worldCircles);
+
+
+
+
+        const worldData = this.data['fertility-rate'].map( (countryData, index) => {
+            return {
+                country:countryData.country, //Go get to build a new array
+                id: countryData.geo,
+                xVal : countryData[this.activeYear],
+                yVal : this.data['gdp'][index][activeYear],
+                circleSize : this.data['child-mortality'][index][activeYear] //
+            }
+
+        });
+        
+        svgGroup.selectAll("circle")
+                .data(worldData)
+                .enter()
+                .append("circle")
+                .attr("x", d =>  x(d.xVal))
+                .attr("y", d =>  y(d.yVal))
+                .attr("r", 10);
+                .exit.remove()
+
+        // const worldData = this.data['fertility-rate'].map( (countryData, index) => {
+        //     return {
+        //         country:countryData.country, //Go get to build a new array
+        //         id: countryData.geo,
+        //         xVal : countryData[this.activeYear],
+        //         yVal : this.data['gdp'][index][activeYear],
+        //         circleSize : this.data['child-mortality'][index][activeYear] //
+        //     }
+
+        // });
+
+        // console.log(worldData)
+
+        // const x = d3.scaleLinear()
+        //     .domain([0,d3.max(worldData, d => {
+        //         return d.xVal
+        //     })])
+        //     .range([0, this.width]);
+        
+        // const y = d3.scaleLinear()
+        //     .domain([0,d3.max(worldData, d => {
+        //         return d.yVal
+        //     })])
+        //     .range([ this.height, 0]);
+        
+        // const xAxis = d3.axisBottom().scale(x);
+        // const yAxis= d3.axisLeft().scale(y);
+        
+        // console.log(y(200))
+        
+        // let xAxis = d3.axisBottom(xScale);
+        // let yAxis = d3.axisLeft(yScale); 
+        // d3.select(".x-axis").call(xAxis);
+        // d3.select(".y-axis").call(yAxis);
+
+        // let minSize = d3.min((worldData, function(d){return d.circleSize}))
+        // let maxSize = d3.max((worldData, function(d){return d.circleSize}))
+
+
+
+        // d3.select('.plot-svg')
+        //     .selectAll("circle")
+        //     .data(worldData)
+        //     .join("circle")
+        //         .attr("cx", (worldData, function(d) { return d.xVal}))
+        //         .attr("cx", (worldData, function(d) { return d.yVal}))
+        //         .attr("cx", (worldData, function(d) { return circleSizer(d.circleSize)}))
+
+                
+
     }
 
     /**

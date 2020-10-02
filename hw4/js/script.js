@@ -38,6 +38,7 @@ loadData().then(data => {
     const infoBox = new InfoBox(data);
     const worldMap = new Map(data, updateCountry);
     const gapPlot = new GapPlot(data, updateCountry, updateYear, this.activeYear);
+    gapPlot.drawPlot();
 
 
     // Initialize gapPlot here.
@@ -49,9 +50,11 @@ loadData().then(data => {
         // ******* TODO: PART I *******
         // You need to pass the world topo data to the drawMap() function as a parameter, along with the starting activeYear.
         //TODO - your code goes here -
-
-
-
+        d3.csv("https://pkgstore.datahub.io/JohnSnowLabs/country-and-continent-codes-list/country-and-continent-codes-list-csv_csv/data/b7876b7f496677669644f3d1069d3121/country-and-continent-codes-list-csv_csv.csv").then( csvData=>{
+        console.log(csvData)    
+        worldMap.drawMap(mapData, )
+        })
+        
     });
 
     // This clears a selection by listening for a click

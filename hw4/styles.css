@@ -348,7 +348,9 @@ div.tooltip {
 
 
 /* Styling for Counties */
-
+.no-region{
+    fill:gray;
+}
 .africa {
     fill: #FFCA28;
     /*  stroke-width: 1px;*/
