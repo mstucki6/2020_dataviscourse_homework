@@ -1,5 +1,5 @@
 # CS-5630 / CS-6630 Homework 5
-*Due: Friday, October 11, 11:59 pm.*
+*Due: Friday, October 9, 11:59 pm.*
 
 In this assignment you will visualize polling data and predictions for the upcoming US presidential election. The goal of the homework is to visualize the predicted margin of victory for the candidates in each state, but to also show the uncertainty in the race as of late September. Finally, we also want to show the “raw” data underlying these predictions – the polling data.
 
