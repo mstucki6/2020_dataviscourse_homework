@@ -189,13 +189,13 @@ Your final solution should behave something like this ([full resultion download]
 
 ## Grading
 
-5%: Extra Credit 1 (Data Loading): Data is loaded from the CSV file. JSON file isn't used.
-5%: PartI: Table Text Elements.
-5%: Part II: Plot Legend.  
-15%: Part III: Gridlines.   
-15%: Part IV: Bar charts. 
-15%: Part V: Circle plots.   
-15%: Part VI: Sorting table elements.  
-10%: Part VII: Showing sort state in headers.
-20%: Part VII: Table subgroups.
-5%: Extra Credit 2: Sorting works with groups open.
+* 5%: Extra Credit 1 (Data Loading): Data is loaded from the CSV file. JSON file isn't used.
+* 5%: Part I: Table Text Elements.
+* 5%: Part II: Plot Legend.
+* 15%: Part III: Gridlines.
+* 15%: Part IV: Bar charts.
+* 15%: Part V: Circle plots.
+* 15%: Part VI: Sorting table elements.
+* 10%: Part VII: Showing sort state in headers.
+* 20%: Part VII: Table subgroups.
+* 5%: Extra Credit 2: Sorting works with groups open.
