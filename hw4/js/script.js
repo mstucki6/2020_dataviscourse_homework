@@ -38,7 +38,7 @@ loadData().then(data => {
     const infoBox = new InfoBox(data);
     const worldMap = new Map(data, updateCountry);
     const gapPlot = new GapPlot(data, updateCountry, updateYear, this.activeYear);
-    gapPlot.drawPlot();
+    
 
 
     // Initialize gapPlot here.

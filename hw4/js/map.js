@@ -44,11 +44,11 @@ class Map {
      * @param world the json data with the shape of all countries and a string for the activeYear
      */
     drawMap(world) {
-         console.log(this.populationData)
+         //console.log(this.populationData)
          
          //Call the library 
         const featureCollection = topojson.feature(world, world.objects.countries);
-        console.log(topojson.feature(world, world.objects.countries))
+        //console.log(topojson.feature(world, world.objects.countries))
 
         //Create country [class from above] array 
         const countryCodetoContinents = {};
@@ -56,7 +56,7 @@ class Map {
             this.populationData.forEach( data => {
                 countryCodetoContinents[data.geo]=data.region
             });
-            console.log(countryCodetoContinents)
+            //console.log(countryCodetoContinents)
 
         //create a loop that goes through all the items and appends them to the empty array
        const svg = d3.select("#map-chart")

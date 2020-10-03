@@ -49,6 +49,10 @@ class GapPlot {
         this.activeYear = activeYear;
 
         this.data = data;
+        this.drawPlot()
+        this.drawDropDown()
+        this.drawYearBar()
+        this.updatePlot(this.activeYear, "population", "population", "population")
 
         //TODO - your code goes here -
 
@@ -76,48 +80,11 @@ class GapPlot {
          You will be setting up the plot for the scatterplot.
          Here you will create axes for the x and y data that you will be selecting and calling in updatePlot
          (hint): class them.
-
          Main things you should set up here:
          1). Create the x and y axes
-        
-
          2). Create the activeYear background text
-
-
          The dropdown menus have been created for you!
-
          */
-        // const worldData = this.data['fertility-rate'].map( (countryData, index) => {
-        //     return {
-        //         country:countryData.country, //Go get to build a new array
-        //         id: countryData.geo,
-        //         xVal : countryData[this.activeYear],
-        //         yVal : this.data['gdp'][index][activeYear],
-        //         circleSize : this.data['child-mortality'][index][activeYear] //
-        //     }
-
-        // });
-
-        // console.log(worldData)
-
-        // const x = d3.scaleLinear()
-        //     .domain([0,d3.max(worldData, d => {
-        //         return d.xVal
-        //     })])
-        //     .range([0, this.width]);
-        
-        // const y = d3.scaleLinear()
-        //     .domain([0,d3.max(worldData, d => {
-        //         return d.yVal
-        //     })])
-        //     .range([ this.height, 0]);
-        
-        // const xAxis = d3.axisBottom().scale(x);
-        // const yAxis= d3.axisLeft().scale(y);
-        
-        // console.log(y(200))
-        
-        
 
         d3.select('#scatter-plot')
             .append('div').attr('id', 'chart-view');
@@ -135,21 +102,16 @@ class GapPlot {
             .attr("width", this.width + this.margin.left + this.margin.right)
             .attr("height", this.height + this.margin.top + this.margin.bottom);
 
+
         let svgGroup = d3.select('#chart-view').select('.plot-svg').append('g').classed('wrapper-group', true);
-            svgGroup.append('g')
-            // .attr("transform", `translate (${this.margin.left},${this.margin.top})`)
-                // .call(yAxis);
-            svgGroup.append('g')
-                .attr("transform", `translate (${this.margin.left},${this.height + this.margin.top})`)
-                // .call(xAxis);
-            
-            // svgGroup.selectAll("circle")
-            //     .data(worldData)
-            //     .enter()
-            //     .append("circle")
-            //     .attr("x", d =>  x(d.xVal))
-            //     .attr("y", d =>  y(d.yVal))
-            //     .attr("r", 10);
+        svgGroup.append('g')
+            .classed("x-axis", true)
+            .attr("transform", `translate(0, ${this.height})`)
+        svgGroup.append('g')
+            .classed("y-axis", true);
+
+        d3.select('.wrapper-group')
+            .attr("transform", `translate(${this.margin.left},${this.margin.top})`);
 
 
         //TODO - your code goes here
@@ -192,8 +154,6 @@ class GapPlot {
             .append('svg')
             .append('g')
             .attr('transform', 'translate(10, 0)');
-        this.drawDropDown()
-
     }
 
     /**
@@ -205,38 +165,31 @@ class GapPlot {
      * @param circleSizeIndicator identifies the values to use for the circle size
      */
     updatePlot(activeYear, xIndicator, yIndicator, circleSizeIndicator) {
-        
 
         // ******* TODO: PART 2 *******
         /*
         You will be updating the scatterplot from the data. hint: use the #chart-view div
-
         *** Structuring your PlotData objects ***
         You need to start by mapping the data specified by the parameters to the PlotData Object
         Your PlotData object is specified at the top of the file
         You will need get the data specified by the x, y and circle size parameters from the data passed
-        to the GapPlot constructor*/
-
-        
-       /**** Setting the scales for your x, y, and circle data ***
+        to the GapPlot constructor
+        *** Setting the scales for your x, y, and circle data ***
         For x and y data, you should get the overall max of the whole data set for that data category,
-        not just for the activeYear.*/
-
-        /****draw circles***
+        not just for the activeYear.
+        ***draw circles***
         draw the circles with a scaled area from the circle data, with cx from your x data and cy from y data
         You need to size the circles from your circleSize data, we have provided a function for you to do this
-        called circleSizer. Use this when you assign the 'r' attribute.*/
-
-        /****Tooltip for the bubbles***
+        called circleSizer. Use this when you assign the 'r' attribute.
+        ***Tooltip for the bubbles***
         You need to assign a tooltip to appear on mouse-over of a country bubble to show the name of the country.
         We have provided the mouse-over for you, but you have to set it up
-        Hint: you will need to call the tooltipRender function for this.*/
-
-        /**** call the drawLegend() and drawDropDown()
+        Hint: you will need to call the tooltipRender function for this.
+        *** call the drawLegend() and drawDropDown()
         These will draw the legend and the drop down menus in your data
-        Pay attention to the parameters needed in each of the functions*/
+        Pay attention to the parameters needed in each of the functions
         
-        
+        */
 
         /**
          *  Function to determine the circle radius by circle size
@@ -251,117 +204,122 @@ class GapPlot {
             return d.circleSize ? cScale(d.circleSize) : 3;
         };
 
-        // TODO - your code goes here -
-        let worldDataX = this.data[xIndicator]
-        let worldDataY = this.data[yIndicator]
-        let worldDataCircle = this.data[circleSizeIndicator]
-
-        let worldXvalues =  []
-        for (let item of worldDataX){
-            let newArray = Object.values(item)
-            for (let value of Object.values(newArray)) {
-                if(typeof value === 'number'){
-                    worldData.push(value)
-                }
-            }
-        }
-
-        let worldYvalues  =  []
-        for (let item of worldDataY){
-            let newArray = Object.values(item)
-            for (let value of Object.values(newArray)) {
-                if(typeof value === 'number'){
-                    worldYvalues.push(value)
-                }
-            }
-        }
-
-        let worldCircles = []
-        for (let item of worldDataCircle){
-            let newArray = Object.values(item)
-            for (let value of Object.values(newArray)) {
-                if(typeof value === 'number'){
-                    wworldCircles.push(value)
-                }
-            }
-        }
-
-        let minSize = d3.min(worldCircles);
-        let maxSize = d3.max(worldCircles);
-
-
-
-
-        const worldData = this.data['fertility-rate'].map( (countryData, index) => {
-            return {
-                country:countryData.country, //Go get to build a new array
-                id: countryData.geo,
-                xVal : countryData[this.activeYear],
-                yVal : this.data['gdp'][index][activeYear],
-                circleSize : this.data['child-mortality'][index][activeYear] //
-            }
-
-        });
-        
-        svgGroup.selectAll("circle")
-                .data(worldData)
-                .enter()
-                .append("circle")
-                .attr("x", d =>  x(d.xVal))
-                .attr("y", d =>  y(d.yVal))
-                .attr("r", 10);
-                .exit.remove()
-
-        // const worldData = this.data['fertility-rate'].map( (countryData, index) => {
-        //     return {
-        //         country:countryData.country, //Go get to build a new array
-        //         id: countryData.geo,
-        //         xVal : countryData[this.activeYear],
-        //         yVal : this.data['gdp'][index][activeYear],
-        //         circleSize : this.data['child-mortality'][index][activeYear] //
-        //     }
-
-        // });
-
-        // console.log(worldData)
-
-        // const x = d3.scaleLinear()
-        //     .domain([0,d3.max(worldData, d => {
-        //         return d.xVal
-        //     })])
-        //     .range([0, this.width]);
-        
-        // const y = d3.scaleLinear()
-        //     .domain([0,d3.max(worldData, d => {
-        //         return d.yVal
-        //     })])
-        //     .range([ this.height, 0]);
-        
-        // const xAxis = d3.axisBottom().scale(x);
-        // const yAxis= d3.axisLeft().scale(y);
-        
-        // console.log(y(200))
-        
-        // let xAxis = d3.axisBottom(xScale);
-        // let yAxis = d3.axisLeft(yScale); 
-        // d3.select(".x-axis").call(xAxis);
-        // d3.select(".y-axis").call(yAxis);
-
-        // let minSize = d3.min((worldData, function(d){return d.circleSize}))
-        // let maxSize = d3.max((worldData, function(d){return d.circleSize}))
-
-
-
-        // d3.select('.plot-svg')
-        //     .selectAll("circle")
-        //     .data(worldData)
-        //     .join("circle")
-        //         .attr("cx", (worldData, function(d) { return d.xVal}))
-        //         .attr("cx", (worldData, function(d) { return d.yVal}))
-        //         .attr("cx", (worldData, function(d) { return circleSizer(d.circleSize)}))
-
+                // TODO - your code goes here -
+                let worldDataX = this.data[xIndicator]
+                let worldDataY = this.data[yIndicator]
+                let worldDataCircle = this.data[circleSizeIndicator]
                 
+        
+                let worldXvalues =  []
+                for (let item of worldDataX){
+                    let newArray = Object.values(item)
+                    for (let value of Object.values(newArray)) {
+                        if(typeof value === 'number'){
+                            worldXvalues.push(value)
+                        }
+                    }
+                }
+        
+                let worldYvalues  =  []
+                for (let item of worldDataY){
+                    let newArray = Object.values(item)
+                    for (let value of Object.values(newArray)) {
+                        if(typeof value === 'number'){
+                            worldYvalues.push(value)
+                        }
+                    }
+                }
+        
+                let worldCircles = []
+                for (let item of worldDataCircle){
+                    let newArray = Object.values(item)
+                    for (let value of Object.values(newArray)) {
+                        if(typeof value === 'number'){
+                            worldCircles.push(value)
+                        }
+                    }
+                }
+        
+                let minSize = d3.min(worldCircles);
+                let maxSize = d3.max(worldCircles);
 
+                 //Call worldData as list of objects new PlotData
+       
+                let bigValues = []
+                for (let j of worldDataX){
+                    let yData;
+                    for (let t of worldDataY){
+                
+                        if (t.country === j.country){
+                        yData = t[activeYear]}
+                    
+                    }
+                    let region;
+                    for (let t of this.data.population){
+                
+                        if (t.country === j.country){
+                    region = j.region}
+                    }
+                    let circles;
+                    for (let t of worldDataCircle){
+                    
+                        if (t.country === j.country){
+                    circles = t[activeYear]}
+                    }
+                
+                var worldData = new PlotData()
+                worldData.xVal= j[activeYear];
+                worldData.yVal= yData;
+                worldData.circleSize= circles;
+                worldData.country = j.country;
+                worldData.region = region;
+                worldData.id = j.geo;
+                    bigValues.push(worldData)
+        }
+
+        console.log(bigValues)
+
+        let x = d3.scaleLinear()
+        .domain([d3.min(worldXvalues), d3.max(worldXvalues)])
+        .range([0, this.width]);
+    
+        let y = d3.scaleLinear()
+        .domain([d3.max(worldYvalues),d3.min(worldYvalues)])
+        .range([0, this.height]);
+
+
+    const xAxis = d3.axisBottom(x);
+    const yAxis= d3.axisLeft(y);
+    
+    d3.select(".x-axis")
+        .call(xAxis)
+
+    d3.select(".y-axis")
+        .call(yAxis)
+
+    // const svg = d3.select("#map-chart")
+    //     .append("svg"); //Create new svg
+    //     svg.append('g')
+
+    
+    d3.select(".wrapper-group").selectAll("circle")
+        .data(bigValues)
+        .join("circle")
+        .attr("cx", d =>  x(d.xVal))
+        .attr("cy", d =>  y(d.yVal))
+        .attr("r", d => circleSizer(d))
+        .attr('class', d=> d.region)
+
+    d3.select('.activeYear-background').append('text')
+
+    let labelTextX = d3.select('.activeYear-background').selectAll('text')
+        .text(activeYear)
+        .attr('transform', `translate(${this.width / 4}, ${this.height / 4})`)
+    d3.select('#xAxisTitle').append('text')
+
+    let labelX = d3.select('#xAxisTitle').selectAll('text')
+        .text(xIndicator.toUpperCase())
+        .attr('transform', `translate(${this.width/2}, ${this.height +2*this.margin.right})`)
     }
 
     /**
@@ -477,7 +435,9 @@ class GapPlot {
 
         // Create the x scale for the activeYear;
         // hint: the domain should be max and min of the years (1800 - 2020); it's OK to set it as numbers
-        // the plot needs to update on move of the slider
+        // the plot needs to update on move of the slider*/
+    
+         
 
         /* ******* TODO: PART 3 *******
         You will need to call the updateYear() function passed from script.js in your activeYear slider
@@ -504,8 +464,16 @@ class GapPlot {
         sliderText.attr('x', yearScale(this.activeYear));
         sliderText.attr('y', 25);
 
+        let dropDownSlider = d3.select('.dropdown-wrapper');
+        let sliderX = dropDownSlider.select('#dropdown_x').select('.dropdown-content').select('select');
+        let sliderY = dropDownSlider.select('#dropdown_y').select('.dropdown-content').select('select');
+        let sliderCircle = dropDownSlider.select('#dropdown_c').select('.dropdown-content').select('select');
+
+
+
         yearSlider.on('input', function () {
-            //TODO - your code goes here -
+            that.updatePlot(this.value, sliderX.node().value, sliderY.Node().value,
+            sliderCircle.node().value);
         });
     }
 
@@ -587,3 +555,4 @@ class GapPlot {
     }
 
 }
+
