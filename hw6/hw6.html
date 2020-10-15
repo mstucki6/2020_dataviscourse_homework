@@ -8,6 +8,16 @@
     <script src="https://d3js.org/d3-array.v2.min.js"></script>
     <script src="https://d3js.org/d3-force.v2.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700&display=swap" rel="stylesheet">
+    <script src="./js/bubbleChart.js"></script>
+    <script src="./js/table.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+  
     <!-- 
        Bootstrap styling if you want to use it: 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -21,6 +31,37 @@
             <div>Name: Marcus Stucki; E-Mail: marcus.stucki@hsc.utah.edu UID: u0420655</div>
         </header>
     </div>
+    <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+        <label class="custom-control-label" for="customSwitch1">Grouped by Topic</label>
+      </div>
+    <div id="bubble-chart">
+        <svg id="bubble-chart-svg">
+
+        </svg>
+
+    </div>
+    <div id="table">
+        <svg id="table-svg">
+
+        </svg>
+
+    </div>
+    <script>
+        d3.json("./data/words.json").then((data)=>{
+            const bubbleChart = new BubbleChart(data)
+            $("#customSwitch1").on("click", (event)=>{
+                const checked = event.currentTarget.checked
+                console.log(event.currentTarget.checked)
+                if (checked) {
+                   bubbleChart.separateByCategory()
+                }else {
+                    bubbleChart.regroupEverything()
+                }
+            })
+            const table = new Table(data)
+        })
+    </script>
 </body>
 
 </html>
