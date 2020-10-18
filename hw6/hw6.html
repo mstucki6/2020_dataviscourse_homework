@@ -7,6 +7,7 @@
     <script src="https://d3js.org/d3.v5.js"></script>
     <script src="https://d3js.org/d3-array.v2.min.js"></script>
     <script src="https://d3js.org/d3-force.v2.min.js"></script>
+    <script src="https://d3js.org/d3-brush.v2.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700&display=swap" rel="stylesheet">
     <script src="./js/bubbleChart.js"></script>
     <script src="./js/table.js"></script>
@@ -49,6 +50,16 @@
     </div>
     <script>
         d3.json("./data/words.json").then((data)=>{
+            data.forEach((d, index)=>{
+            data[index].percentageofspeeches= (
+                d.d_speeches*d.percent_of_d_speeches + d.r_speeches*d.percent_of_r_speeches)/d.total 
+        }
+        )
+        const maxTotal = d3.max(data, (d)=>{return Number(d.total)})
+        data.forEach((d, index)=>{
+            data[index].frequency= (
+                d.total/maxTotal)
+            })
             const bubbleChart = new BubbleChart(data)
             $("#customSwitch1").on("click", (event)=>{
                 const checked = event.currentTarget.checked

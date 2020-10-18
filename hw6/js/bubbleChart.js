@@ -7,19 +7,47 @@ const width = svgWidth-margin.left-margin.right;
 // console.log(colors(10))
 class BubbleChart {
     constructor(data){
-        data.forEach((d, index)=>{
-            data[index].percentageofspeeches= (
-                d.d_speeches*d.percent_of_d_speeches + d.r_speeches*d.percent_of_r_speeches)/d.total 
-        }
-
-        )
         console.log(data)
-        console.log(data.filter((d)=>{return d.phrase==="income"}))
+        console.log(data.filter((d)=>{return d.phrase==="doing business"}))
+        console.log(data.filter((d)=>{return d.phrase==="corrections"}))
+        
         
         this.svg = d3.select("#bubble-chart-svg")
             .attr("width", svgWidth)
             .attr("height", svgHeight);
-        
+
+        function brushed() {
+            console.log( d3.event );
+            var s = d3.event.selection,
+                x0 = s[0][0],
+                y0 = s[0][1],
+                x1 = s[1][0],
+                y1 = s[1][1],
+                dx = s[1][0] - x0,
+                dy = s[1][1] - y0;
+            console.log("("+x0+","+y0+")-("+x1+","+y1+")");
+            }
+            
+            function brushended() {
+            console.log('end');
+            if (!d3.event.selection) {
+                console.log('There is no selection');
+            }   
+            }  
+
+        const brush = d3.brushX().extent([[margin.left, margin.top],[width, height]])
+                    .on("start brush", brushed)
+                    .on("end", brushended);
+
+
+        this.brushContainer = this.svg.append("g")
+            .call(brush.on("brush", (d)=>{console.log("brush")}))
+            .call(brush.move, [100,131])
+            this.svg.on("mousedown", ()=>{
+                this.brushContainer.call(brush.move, [d3.event.clientX, d3.event.clientX+50])
+                console.log(d3.brushSelection(this.brushContainer))
+            })
+
         const xDomainExtent = d3.extent(data,(d)=>{return d.position});
         xDomainExtent[0] *=1.1
         xDomainExtent[1] *=1.2
@@ -50,6 +78,7 @@ class BubbleChart {
             .attr("transform", `translate(0, ${margin.top})`)
             .select(".domain")
             .remove();
+
         this.allCircles = this.svg.selectAll("circle")
             .data(data)
             .enter()
@@ -60,6 +89,7 @@ class BubbleChart {
             .attr("fill", (d)=>{return colors(d.category)})
             //.attr("stroke-width", 3)
             .attr("stroke", "black")
+            
             .on("mouseover",(d)=>{
                 this.tooltip = this.svg.append("g")
                 .attr("class", "tool-tip")
